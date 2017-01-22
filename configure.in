@@ -1499,7 +1499,7 @@ AC_SUBST(RELDATE)
 AC_SUBST(PYTHON_TESTS)
 
 rm -f COPYING.LIB COPYING
-ln -s Copyright COPYING
+ln -s Copyright COPYING || cp -p Copyright COPYING
 
 # keep on one line for cygwin c.f. #130896
 AC_OUTPUT(libxml2.spec:libxml.spec.in Makefile include/Makefile include/libxml/Makefile doc/Makefile doc/examples/Makefile doc/devhelp/Makefile example/Makefile python/Makefile python/tests/Makefile xstc/Makefile include/libxml/xmlversion.h xml2-config libxml-2.0.pc libxml-2.0-uninstalled.pc python/setup.py)
