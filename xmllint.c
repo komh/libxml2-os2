@@ -8,6 +8,10 @@
 
 #include "libxml.h"
 
+#ifdef __OS2__
+#undef HAVE_SYS_MMAN_H
+#endif
+
 #include <string.h>
 #include <stdarg.h>
 #include <assert.h>

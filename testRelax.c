@@ -9,6 +9,10 @@
 #include "libxml.h"
 #ifdef LIBXML_SCHEMAS_ENABLED
 
+#ifdef __OS2__
+#undef HAVE_SYS_MMAN_H
+#endif
+
 #include <libxml/xmlversion.h>
 #include <libxml/parser.h>
 
