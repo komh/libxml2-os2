@@ -44,7 +44,7 @@
 #define MAX_DELEGATE	50
 #define MAX_CATAL_DEPTH	50
 
-#ifdef _WIN32
+#if defined(_WIN32) || defined(__OS2__)
 # define PATH_SEAPARATOR ';'
 #else
 # define PATH_SEAPARATOR ':'
@@ -3231,7 +3231,7 @@ xmlLoadCatalogs(const char *pathss) {
     const char *cur;
     const char *paths;
     xmlChar *path;
-#ifdef _WIN32
+#if defined(_WIN32) || defined(__OS2__)
     int i, iLen;
 #endif
 
@@ -3246,7 +3246,7 @@ xmlLoadCatalogs(const char *pathss) {
 	    while ((*cur != 0) && (*cur != PATH_SEAPARATOR) && (!xmlIsBlank_ch(*cur)))
 		cur++;
 	    path = xmlStrndup((const xmlChar *)paths, cur - paths);
-#ifdef _WIN32
+#if defined(_WIN32) || defined(__OS2__)
         iLen = strlen(path);
         for(i = 0; i < iLen; i++) {
             if(path[i] == '\\') {

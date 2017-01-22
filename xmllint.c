@@ -218,7 +218,7 @@ static int oldxml10 = 0;
  *									*
  ************************************************************************/
 #define MAX_PATHS 64
-#ifdef _WIN32
+#if defined(_WIN32) || defined(__OS2__)
 # define PATH_SEPARATOR ';'
 #else
 # define PATH_SEPARATOR ':'
@@ -2183,7 +2183,7 @@ static void parseAndPrintFile(char *filename, xmlParserCtxtPtr rectxt) {
     else if ((html) && (push)) {
         FILE *f;
 
-#if defined(_WIN32) || defined (__DJGPP__) && !defined (__CYGWIN__)
+#if defined(_WIN32) || defined (__DJGPP__) && !defined (__CYGWIN__) || defined(__OS2__)
 	f = fopen(filename, "rb");
 #else
 	f = fopen(filename, "r");
@@ -2246,7 +2246,7 @@ static void parseAndPrintFile(char *filename, xmlParserCtxtPtr rectxt) {
 	    if ((filename[0] == '-') && (filename[1] == 0)) {
 	      f = stdin;
 	    } else {
-#if defined(_WIN32) || defined (__DJGPP__) && !defined (__CYGWIN__)
+#if defined(_WIN32) || defined (__DJGPP__) && !defined (__CYGWIN__) || defined(__OS2__)
 		f = fopen(filename, "rb");
 #else
 		f = fopen(filename, "r");
@@ -2287,7 +2287,7 @@ static void parseAndPrintFile(char *filename, xmlParserCtxtPtr rectxt) {
 	    } else {
 	        FILE *f;
 
-#if defined(_WIN32) || defined (__DJGPP__) && !defined (__CYGWIN__)
+#if defined(_WIN32) || defined (__DJGPP__) && !defined (__CYGWIN__) || defined(__OS2__)
 		f = fopen(filename, "rb");
 #else
 		f = fopen(filename, "r");
