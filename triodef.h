@@ -69,6 +69,8 @@
 # define TRIO_PLATFORM_WIN32
 #elif defined(mpeix) || defined(__mpexl)
 # define TRIO_PLATFORM_MPEIX
+#elif defined(__OS2__)
+# define TRIO_PLATFORM_UNIX
 #endif
 
 #if defined(_AIX)
