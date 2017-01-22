@@ -255,8 +255,7 @@
 /* Define as const if the declaration of iconv() needs const. */
 #undef ICONV_CONST
 
-/* Define to the sub-directory in which libtool stores uninstalled libraries.
-   */
+/* Define to the sub-directory where libtool stores uninstalled libraries. */
 #undef LT_OBJDIR
 
 /* Name of package */
@@ -280,9 +279,6 @@
 /* Define to the version of this package. */
 #undef PACKAGE_VERSION
 
-/* Define to 1 if the C compiler supports function prototypes. */
-#undef PROTOTYPES
-
 /* Define to 1 if you have the ANSI C header files. */
 #undef STDC_HEADERS
 
@@ -297,9 +293,6 @@
 
 /* Using the Win32 Socket implementation */
 #undef _WINSOCKAPI_
-
-/* Define like PROTOTYPES; this can be used by system headers. */
-#undef __PROTOTYPES
 
 /* Win32 Std C name mangling work-around */
 #undef snprintf
