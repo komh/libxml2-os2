@@ -4115,6 +4115,72 @@ testThread(void)
         return(1);
     return (0);
 }
+
+#elif defined __OS2__
+#define INCL_DOS
+#include <os2.h>
+
+#define TEST_REPEAT_COUNT 500
+
+struct thread_data {
+    void *data;
+    void **result;
+};
+
+static int tid[MAX_ARGC];
+
+static void
+os2_thread_specific_data(void *private_data)
+{
+    struct thread_data *td = (struct thread_data *) private_data;
+
+    *td->result = thread_specific_data(td->data);
+}
+
+static int
+testThread(void)
+{
+    unsigned int i, repeat;
+    unsigned int num_threads = sizeof(testfiles) / sizeof(testfiles[0]);
+    void *results[MAX_ARGC];
+    struct thread_data td[MAX_ARGC];
+    int ret = 0;
+
+    xmlInitParser();
+    for (repeat = 0; repeat < TEST_REPEAT_COUNT; repeat++) {
+        xmlLoadCatalog(catalog);
+        nb_tests++;
+
+        for (i = 0; i < num_threads; i++) {
+            td[i].data   = (void *) testfiles[i];
+            td[i].result = &results[i];
+
+            tid[i] = _beginthread(os2_thread_specific_data,
+                                  NULL, 0x10000, (void *) &td[i]);
+            if (tid[i] == -1) {
+                fprintf(stderr, "_beginthread failed\n");
+                return 1;
+            }
+        }
+
+        for (i = 0; i < num_threads; i++) {
+            TID t = tid[i];
+            DosWaitThread(&t, DCWW_WAIT);
+        }
+
+        xmlCatalogCleanup();
+        for (i = 0; i < num_threads; i++) {
+            if (results[i] != (void *) Okay) {
+                fprintf(stderr, "Thread %d handling %s failed\n",
+                        i, testfiles[i]);
+                ret = 1;
+            }
+        }
+    }
+
+    return ret;
+}
+
 #else
 static int
 testThread(void)
