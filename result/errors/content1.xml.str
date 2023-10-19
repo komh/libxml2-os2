@@ -4,10 +4,8 @@
 ./test/errors/content1.xml:7: parser error : expected '>'
 <!ELEMENT aElement (a |b * >
                          ^
-./test/errors/content1.xml:7: parser error : internal error
-<!ELEMENT aElement (a |b * >
-                         ^
-./test/errors/content1.xml:7: parser error : DOCTYPE improperly terminated
+./test/errors/content1.xml:7: parser error : internal error: xmlParseInternalSubset: error detected in Markup declaration
+
 <!ELEMENT aElement (a |b * >
                          ^
 ./test/errors/content1.xml : failed to parse

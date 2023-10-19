@@ -159,7 +159,8 @@ static int run_test2(xmlDictPtr parent) {
 	fprintf(stderr, "Out of memory while creating sub-dictionary\n");
 	exit(1);
     }
-    memset(test2, 0, sizeof(test2));
+    /* Cast to avoid buggy warning on MSVC. */
+    memset((void *) test2, 0, sizeof(test2));
 
     /*
      * Fill in NB_STRINGS_MIN, at this point the dictionary should not grow
@@ -277,7 +278,7 @@ static int run_test2(xmlDictPtr parent) {
 	cur++;
 	*pref = 0;
 	tmp = xmlDictQLookup(dict, &prefix[0], cur);
-	if (xmlDictQLookup(dict, &prefix[0], cur) != test2[i]) {
+	if (tmp != test2[i]) {
 	    fprintf(stderr, "Failed lookup check for '%s':'%s'\n",
 	            &prefix[0], cur);
             ret = 1;
@@ -322,7 +323,8 @@ static int run_test1(void) {
 	fprintf(stderr, "Out of memory while creating dictionary\n");
 	exit(1);
     }
-    memset(test1, 0, sizeof(test1));
+    /* Cast to avoid buggy warning on MSVC. */
+    memset((void *) test1, 0, sizeof(test1));
 
     /*
      * Fill in NB_STRINGS_MIN, at this point the dictionary should not grow
@@ -408,7 +410,7 @@ static int run_test1(void) {
 	cur++;
 	*pref = 0;
 	tmp = xmlDictQLookup(dict, &prefix[0], cur);
-	if (xmlDictQLookup(dict, &prefix[0], cur) != test1[i]) {
+	if (tmp != test1[i]) {
 	    fprintf(stderr, "Failed lookup check for '%s':'%s'\n",
 	            &prefix[0], cur);
             ret = 1;
