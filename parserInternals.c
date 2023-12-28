@@ -10,7 +10,7 @@
 #define IN_LIBXML
 #include "libxml.h"
 
-#if defined(_WIN32)
+#if defined(_WIN32) || defined (__OS2__)
 #define XML_DIR_SEP '\\'
 #else
 #define XML_DIR_SEP '/'

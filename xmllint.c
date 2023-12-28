@@ -201,7 +201,7 @@ static int oldxml10 = 0;
  *									*
  ************************************************************************/
 #define MAX_PATHS 64
-#ifdef _WIN32
+#if defined(_WIN32) || defined(__OS2__)
 # define PATH_SEPARATOR ';'
 #else
 # define PATH_SEPARATOR ':'

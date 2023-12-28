@@ -810,20 +810,20 @@ xmlFileOpen_real (const char *filename) {
     }
 
     if (!xmlStrncasecmp(BAD_CAST filename, BAD_CAST "file://localhost/", 17)) {
-#if defined (_WIN32)
+#if defined (_WIN32) || defined (__OS2__)
 	path = &filename[17];
 #else
 	path = &filename[16];
 #endif
     } else if (!xmlStrncasecmp(BAD_CAST filename, BAD_CAST "file:///", 8)) {
-#if defined (_WIN32)
+#if defined (_WIN32) || defined (__OS2__)
 	path = &filename[8];
 #else
 	path = &filename[7];
 #endif
     } else if (!xmlStrncasecmp(BAD_CAST filename, BAD_CAST "file:/", 6)) {
         /* lots of generators seems to lazy to read RFC 1738 */
-#if defined (_WIN32)
+#if defined (_WIN32) || defined (__OS2__)
 	path = &filename[6];
 #else
 	path = &filename[5];
@@ -892,13 +892,13 @@ xmlFileOpenW (const char *filename) {
     }
 
     if (!xmlStrncasecmp(BAD_CAST filename, BAD_CAST "file://localhost/", 17))
-#if defined (_WIN32)
+#if defined (_WIN32) || defined (__OS2__)
 	path = &filename[17];
 #else
 	path = &filename[16];
 #endif
     else if (!xmlStrncasecmp(BAD_CAST filename, BAD_CAST "file:///", 8)) {
-#if defined (_WIN32)
+#if defined (_WIN32) || defined (__OS2__)
 	path = &filename[8];
 #else
 	path = &filename[7];
@@ -1082,13 +1082,13 @@ xmlGzfileOpen_real (const char *filename) {
     }
 
     if (!xmlStrncasecmp(BAD_CAST filename, BAD_CAST "file://localhost/", 17))
-#if defined (_WIN32)
+#if defined (_WIN32) || defined (__OS2__)
 	path = &filename[17];
 #else
 	path = &filename[16];
 #endif
     else if (!xmlStrncasecmp(BAD_CAST filename, BAD_CAST "file:///", 8)) {
-#if defined (_WIN32)
+#if defined (_WIN32) || defined (__OS2__)
 	path = &filename[8];
 #else
 	path = &filename[7];
@@ -1161,13 +1161,13 @@ xmlGzfileOpenW (const char *filename, int compression) {
     }
 
     if (!xmlStrncasecmp(BAD_CAST filename, BAD_CAST "file://localhost/", 17))
-#if defined (_WIN32)
+#if defined (_WIN32) || defined (__OS2__)
 	path = &filename[17];
 #else
 	path = &filename[16];
 #endif
     else if (!xmlStrncasecmp(BAD_CAST filename, BAD_CAST "file:///", 8)) {
-#if defined (_WIN32)
+#if defined (_WIN32) || defined (__OS2__)
 	path = &filename[8];
 #else
 	path = &filename[7];
@@ -3700,7 +3700,7 @@ xmlParserGetDirectory(const char *filename) {
 
     if (filename == NULL) return(NULL);
 
-#if defined(_WIN32)
+#if defined(_WIN32) || defined(__OS2__)
 #   define IS_XMLPGD_SEP(ch) ((ch=='/')||(ch=='\\'))
 #else
 #   define IS_XMLPGD_SEP(ch) (ch=='/')
@@ -3817,13 +3817,13 @@ static int xmlNoNetExists(const char *URL) {
 	return(0);
 
     if (!xmlStrncasecmp(BAD_CAST URL, BAD_CAST "file://localhost/", 17))
-#if defined (_WIN32)
+#if defined (_WIN32) || defined (__OS2__)
 	path = &URL[17];
 #else
 	path = &URL[16];
 #endif
     else if (!xmlStrncasecmp(BAD_CAST URL, BAD_CAST "file:///", 8)) {
-#if defined (_WIN32)
+#if defined (_WIN32) || defined (__OS2__)
 	path = &URL[8];
 #else
 	path = &URL[7];
