@@ -784,7 +784,7 @@ WITH_MODULES=0
 
 if test "$with_modules" != "no" ; then
     case "$host" in
-        *-*-cygwin* | *-*-msys* )
+        *-*-cygwin* | *-*-msys* | *-*-os2* )
             MODULE_EXTENSION=".dll"
             ;;
         *-*-mingw*)
