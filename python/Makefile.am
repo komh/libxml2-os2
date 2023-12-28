@@ -33,7 +33,7 @@ API_DESC = $(top_srcdir)/doc/libxml2-api.xml $(srcdir)/libxml2-python-api.xml
 GENERATED = libxml2class.py libxml2class.txt $(BUILT_SOURCES)
 CLEANFILES = libxml2.py $(GENERATED)
 
-all-local: libxml2.py
+all-local: libxml2.py .libs/libxml2mod.pyd
 
 $(GENERATED): $(srcdir)/generator.py $(API_DESC)
 	$(PYTHON) $(srcdir)/generator.py $(srcdir)
@@ -43,6 +43,16 @@ libxml.$(OBJEXT): libxml2-export.c
 
 libxml2.py: $(srcdir)/libxml.py libxml2class.py
 	cat $(srcdir)/libxml.py `test -f libxml2class.py || echo $(srcdir)/`libxml2class.py > $@
+
+.libs/libxml2mod.pyd: libxml2mod.la
+	test -f .libs/xml2mod.pyd || exit 0 && rm -f $@ && ln -s xml2mod.pyd $@
+
+install-exec-hook:
+	cd $(DESTDIR)$(pyexecdir) && test -f xml2mod.pyd || exit 0 && \
+	  rm -f libxml2mod.pyd && ln -s xml2mod.pyd libxml2mod.pyd
+
+uninstall-hook:
+	rm -f $(DESTDIR)$(pyexecdir)/libxml2mod.pyd
 
 clean-local:
 	rm -rf __pycache__ *.pyc

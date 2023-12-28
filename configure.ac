@@ -762,7 +762,7 @@ AS_IF([test "x$with_python" != "xno"], [
 AM_CONDITIONAL([WITH_PYTHON], [test "x$with_python" != "xno"])
 
 dnl
-dnl Extra Python flags for Windows
+dnl Extra Python flags for Windows and OS/2
 dnl
 PYTHON_LDFLAGS=
 if test "${PYTHON}" != ""; then
@@ -772,6 +772,9 @@ if test "${PYTHON}" != ""; then
             ;;
         *-*-cygwin* |*-*-msys* )
             PYTHON_LDFLAGS="-no-undefined"
+            ;;
+        *-*-os2* )
+            PYTHON_LDFLAGS="-no-undefined -shrext .pyd -Zomf"
             ;;
     esac
 fi
