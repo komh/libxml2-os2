@@ -45,6 +45,7 @@
 
 #if !defined(_WIN32) && \
     !defined(__CYGWIN__) && \
+    !defined(__OS2__) && \
     (defined(__clang__) || \
      (defined(__GNUC__) && (__GNUC__ >= 4)))
   #define XML_HIDDEN __attribute__((visibility("hidden")))
