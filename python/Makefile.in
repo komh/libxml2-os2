@@ -896,6 +896,8 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 	-test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
 @WITH_PYTHON_FALSE@clean-local:
+@WITH_PYTHON_FALSE@install-exec-hook:
+@WITH_PYTHON_FALSE@uninstall-hook:
 clean: clean-recursive
 
 clean-am: clean-generic clean-libtool clean-local \
@@ -928,7 +930,8 @@ install-dvi: install-dvi-recursive
 install-dvi-am:
 
 install-exec-am: install-pyexecLTLIBRARIES
-
+	@$(NORMAL_INSTALL)
+	$(MAKE) $(AM_MAKEFLAGS) install-exec-hook
 install-html: install-html-recursive
 
 install-html-am:
@@ -971,9 +974,10 @@ ps-am:
 
 uninstall-am: uninstall-nodist_pythonPYTHON \
 	uninstall-pyexecLTLIBRARIES uninstall-pythonPYTHON
-
+	@$(NORMAL_INSTALL)
+	$(MAKE) $(AM_MAKEFLAGS) uninstall-hook
 .MAKE: $(am__recursive_targets) all check install install-am \
-	install-exec install-strip
+	install-exec install-exec-am install-strip uninstall-am
 
 .PHONY: $(am__recursive_targets) CTAGS GTAGS TAGS all all-am all-local \
 	am--depfiles check check-am clean clean-generic clean-libtool \
@@ -982,14 +986,15 @@ uninstall-am: uninstall-nodist_pythonPYTHON \
 	distclean-libtool distclean-tags distdir dvi dvi-am html \
 	html-am info info-am install install-am install-data \
 	install-data-am install-dvi install-dvi-am install-exec \
-	install-exec-am install-html install-html-am install-info \
-	install-info-am install-man install-nodist_pythonPYTHON \
-	install-pdf install-pdf-am install-ps install-ps-am \
-	install-pyexecLTLIBRARIES install-pythonPYTHON install-strip \
-	installcheck installcheck-am installdirs installdirs-am \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
-	pdf pdf-am ps ps-am tags tags-am uninstall uninstall-am \
+	install-exec-am install-exec-hook install-html install-html-am \
+	install-info install-info-am install-man \
+	install-nodist_pythonPYTHON install-pdf install-pdf-am \
+	install-ps install-ps-am install-pyexecLTLIBRARIES \
+	install-pythonPYTHON install-strip installcheck \
+	installcheck-am installdirs installdirs-am maintainer-clean \
+	maintainer-clean-generic mostlyclean mostlyclean-compile \
+	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
+	tags tags-am uninstall uninstall-am uninstall-hook \
 	uninstall-nodist_pythonPYTHON uninstall-pyexecLTLIBRARIES \
 	uninstall-pythonPYTHON
 
@@ -1000,7 +1005,7 @@ uninstall-am: uninstall-nodist_pythonPYTHON \
 # parallel builds.
 .NOTPARALLEL:
 
-@WITH_PYTHON_TRUE@all-local: libxml2.py
+@WITH_PYTHON_TRUE@all-local: libxml2.py .libs/libxml2mod.pyd
 
 @WITH_PYTHON_TRUE@$(GENERATED): $(srcdir)/generator.py $(API_DESC)
 @WITH_PYTHON_TRUE@	$(PYTHON) $(srcdir)/generator.py $(srcdir)
@@ -1010,6 +1015,16 @@ uninstall-am: uninstall-nodist_pythonPYTHON \
 
 @WITH_PYTHON_TRUE@libxml2.py: $(srcdir)/libxml.py libxml2class.py
 @WITH_PYTHON_TRUE@	cat $(srcdir)/libxml.py `test -f libxml2class.py || echo $(srcdir)/`libxml2class.py > $@
+
+@WITH_PYTHON_TRUE@.libs/libxml2mod.pyd: libxml2mod.la
+@WITH_PYTHON_TRUE@	test -f .libs/xml2mod.pyd || exit 0 && rm -f $@ && ln -s xml2mod.pyd $@
+
+@WITH_PYTHON_TRUE@install-exec-hook:
+@WITH_PYTHON_TRUE@	cd $(DESTDIR)$(pyexecdir) && test -f xml2mod.pyd || exit 0 && \
+@WITH_PYTHON_TRUE@	  rm -f libxml2mod.pyd && ln -s xml2mod.pyd libxml2mod.pyd
+
+@WITH_PYTHON_TRUE@uninstall-hook:
+@WITH_PYTHON_TRUE@	rm -f $(DESTDIR)$(pyexecdir)/libxml2mod.pyd
 
 @WITH_PYTHON_TRUE@clean-local:
 @WITH_PYTHON_TRUE@	rm -rf __pycache__ *.pyc
